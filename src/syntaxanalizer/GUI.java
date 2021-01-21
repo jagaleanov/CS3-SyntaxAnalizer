@@ -114,8 +114,15 @@ public class GUI extends javax.swing.JFrame {
         for (int i = 0; i < tokenList.size(); i++) {
             consoleResponse += tokenList.get(i).toString();
         }
+        SyntaxAnalizer syntAn = new SyntaxAnalizer(tokenList);
+        for (int i = 0; i < syntAn.getErrorList().size(); i++) {
+            consoleResponse += syntAn.getErrorList().get(i);
+        }
+        
         txtConsole.setText("");
         txtConsole.setText(consoleResponse);
+        
+        
     }//GEN-LAST:event_btnAnalizeActionPerformed
 
     /**
