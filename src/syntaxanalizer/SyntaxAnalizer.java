@@ -29,21 +29,18 @@ public class SyntaxAnalizer {
             int contador1 = 0;
             int aux = 0;
 
-            if (i == tokenList.size() - 1) {
-
-            } else {
+            if (i != tokenList.size() - 1) {
                 nextToken = tokenList.get(i + 1);
             }
 
-            if (i == 0) {
-            } else {
+            if (i != 0) {
                 backToken = tokenList.get(i - 1);
             }
 
             /**
              *
              */
-            if (actualToken.getLexema().equalsIgnoreCase("SELECT")) {
+            if (actualToken.getLexema().equalsIgnoreCase("SELECT")) {//SELECT
                 state = "SELECT";
                 if (nextToken.getType() == 2) {
                     //OK
@@ -53,16 +50,16 @@ public class SyntaxAnalizer {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
 
-            } else if (actualToken.getLexema().equalsIgnoreCase("FROM")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("FROM")) {//FROM
                 state = "FROM";
                 if (nextToken.getType() == 2) {
                     //OK
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("WHERE")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("WHERE")) {//WHERE
 
-            } else if (actualToken.getLexema().equalsIgnoreCase("ORDER")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("ORDER")) {//ORDER
                 state = "ORDER";
                 if (nextToken.getLexema().equalsIgnoreCase("BY")) {
                     //OK
@@ -70,14 +67,14 @@ public class SyntaxAnalizer {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
 
-            } else if (actualToken.getLexema().equalsIgnoreCase("BY")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("BY")) {//BY
                 if (nextToken.getType() == 2) {
                     //OK
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
             } else if (actualToken.getLexema().equalsIgnoreCase("ASC") || actualToken.getLexema().equalsIgnoreCase("DESC")) {
-                if (nextToken == null) {
+                if (nextToken == null) {//ASC DESC
                     //OK
                 } else if (nextToken.getLexema().equalsIgnoreCase(",")) {
                     //OK
@@ -86,20 +83,20 @@ public class SyntaxAnalizer {
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("INSERT")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("INSERT")) {//INSERT
                 state = "INSERT";
                 if (nextToken.getLexema().equalsIgnoreCase("INTO")) {
                     //OK
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("INTO")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("INTO")) {//INTO
                 if (nextToken.getType() == 2) {
                     //OK
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("UPDATE")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("UPDATE")) {//UPDATE
                 state = "UPDATE";
                 if (nextToken.getType() == 2) {
                     //OK
@@ -107,14 +104,14 @@ public class SyntaxAnalizer {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
 
-            } else if (actualToken.getLexema().equalsIgnoreCase("DELETE")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("DELETE")) {//DELETE
                 state = "DELETE";
                 if (nextToken.getLexema().equalsIgnoreCase("FROM")) {
                     //OK
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getType() == 2) {
+            } else if (actualToken.getType() == 2) {//IDENTIFICADORES
                 if ("SELECT".equals(state)) {
                     if (nextToken.getLexema().equalsIgnoreCase("FROM")) {
                         //OK
@@ -192,13 +189,13 @@ public class SyntaxAnalizer {
                         errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                     }
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase(",")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase(",")) {//COMA
                 if (nextToken.getType() == 2) {
                     //OK
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("(")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("(")) {//(
                 contador1 = 0;
                 if (nextToken.getType() == 2) {
                     //OK
@@ -206,7 +203,7 @@ public class SyntaxAnalizer {
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase(")")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase(")")) {//)
                 if (state == "INSERT2") {
                     if (nextToken.getLexema().equalsIgnoreCase("VALUES")) {
                         //OK
@@ -229,7 +226,7 @@ public class SyntaxAnalizer {
                         errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                     }
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("VALUES")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("VALUES")) {//VALUES
                 state = "INSERT3";
                 aux = contador1;
                 contador1 = 0;
@@ -238,21 +235,21 @@ public class SyntaxAnalizer {
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("SET")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("SET")) {//SET
                 state = "SET";
                 if (nextToken.getType() == 2) {
                     //OK
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("=")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase("=")) {//=
                 state = "SET";
                 if (nextToken.getType() == 5 || nextToken.getType() == 3) {
                     //OK
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getType() == 5 || actualToken.getType() == 3) {
+            } else if (actualToken.getType() == 5 || actualToken.getType() == 3) {//NÚMERO O STRING
                 if (nextToken.getLexema().equalsIgnoreCase("WHERE")) {
                     //OK
                 } else if (nextToken.getLexema().equalsIgnoreCase(";")) {
@@ -264,7 +261,7 @@ public class SyntaxAnalizer {
                 } else {
                     errorsList.add("Error en la línea " + nextToken.getRow() + " en la columna " + nextToken.getCol() + ".");
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase(";")) {
+            } else if (actualToken.getLexema().equalsIgnoreCase(";")) {//;
                 if (nextToken.getLexema().equalsIgnoreCase("INSERT")) {
                     //OK
                 } else if (nextToken.getLexema().equalsIgnoreCase("SELECT")) {
