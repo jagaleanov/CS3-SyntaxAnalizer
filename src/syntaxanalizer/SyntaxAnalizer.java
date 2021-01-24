@@ -314,9 +314,7 @@ public class SyntaxAnalizer {
                     this.setError(nextToken);
                 }
             } else if (actualToken.getLexema().equalsIgnoreCase("AND") || actualToken.getLexema().equalsIgnoreCase("OR")) {
-                if (nextToken.getLexema().equalsIgnoreCase("NOT")) {
-                    //OK
-                } else if (nextToken.getType() == 2) {
+                if (nextToken.getType() == 2) {
                     //OK
                 } else {
                     this.setError(nextToken);
