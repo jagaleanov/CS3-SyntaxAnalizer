@@ -175,9 +175,12 @@ public class SyntaxAnalizer {
 
                     if (nextToken.getType() == 8) {
                         //OK
+                    } else if (nextToken.getLexema().equalsIgnoreCase("IS")) {
+                        //OK
                     } else {
                         this.setError(nextToken);
                     }
+
                 }
             } else if (actualToken.getLexema().equalsIgnoreCase(",")) {//,
                 if (nextToken.getType() == 2) {
@@ -278,8 +281,6 @@ public class SyntaxAnalizer {
             } else if (actualToken.getLexema().equalsIgnoreCase("WHERE")) {//WHERE
                 state = "WHERE";
                 if (nextToken.getType() == 2) {
-                    //OK
-                } else if (nextToken.getLexema().equalsIgnoreCase("IS")) {
                     //OK
                 } else {
                     this.setError(nextToken);
