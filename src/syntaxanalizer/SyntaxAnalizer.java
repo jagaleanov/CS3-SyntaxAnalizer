@@ -279,11 +279,43 @@ public class SyntaxAnalizer {
                 state = "WHERE";
                 if (nextToken.getType() == 2) {
                     //OK
+                } else if (nextToken.getLexema().equalsIgnoreCase("IS")) {
+                    //OK
                 } else {
                     this.setError(nextToken);
                 }
             } else if (nextToken.getType() == 8) {//OPERADOR RELACIONAL
                 if (nextToken.getType() == 5 || nextToken.getType() == 3) {
+                    //OK
+                } else {
+                    this.setError(nextToken);
+                }
+            } else if (actualToken.getLexema().equalsIgnoreCase("IS")) {
+                if (nextToken.getLexema().equalsIgnoreCase("NOT")) {
+                    //OK
+                } else if (nextToken.getLexema().equalsIgnoreCase("NULL")) {
+                    //OK
+                } else {
+                    this.setError(nextToken);
+                }
+            } else if (actualToken.getLexema().equalsIgnoreCase("NOT")) {
+                if (nextToken.getLexema().equalsIgnoreCase("NULL")) {
+                    //OK
+                } else {
+                    this.setError(nextToken);
+                }
+            } else if (actualToken.getLexema().equalsIgnoreCase("NULL")) {
+                if (nextToken.getLexema().equalsIgnoreCase("AND") || nextToken.getLexema().equalsIgnoreCase("OR")) {
+                    //OK
+                } else if (nextToken == null) {
+                    //OK
+                } else {
+                    this.setError(nextToken);
+                }
+            } else if (actualToken.getLexema().equalsIgnoreCase("AND") || actualToken.getLexema().equalsIgnoreCase("OR")) {
+                if (nextToken.getLexema().equalsIgnoreCase("NOT")) {
+                    //OK
+                } else if (nextToken.getType() == 2) {
                     //OK
                 } else {
                     this.setError(nextToken);
