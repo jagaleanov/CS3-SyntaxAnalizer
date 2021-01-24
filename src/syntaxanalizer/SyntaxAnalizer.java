@@ -15,7 +15,6 @@ public class SyntaxAnalizer {
         for (int i = 0; i < tokenList.size(); i++) {
             Token actualToken = tokenList.get(i);
             Token nextToken = null;
-            Token backToken = null;
             String state = "";
             int contador1 = 0;
             int aux = 0;
@@ -24,11 +23,9 @@ public class SyntaxAnalizer {
                 nextToken = tokenList.get(i + 1);
             }
 
-            if (i != 0) {
-                backToken = tokenList.get(i - 1);
-            }
-
-            if (actualToken.getLexema().equalsIgnoreCase("SELECT")) {//SELECT
+            if (actualToken.getType() == -3 || actualToken.getType() == -2 || nextToken.getType() == -3 || nextToken.getType() == -2) {
+                //OK
+            } else if (actualToken.getLexema().equalsIgnoreCase("SELECT")) {//SELECT
                 state = "SELECT";
                 if (nextToken.getType() == 2) {
                     //OK
@@ -45,8 +42,6 @@ public class SyntaxAnalizer {
                 } else {
                     this.setError(nextToken);
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase("WHERE")) {//WHERE
-
             } else if (actualToken.getLexema().equalsIgnoreCase("ORDER")) {//ORDER
                 state = "ORDER";
                 if (nextToken.getLexema().equalsIgnoreCase("BY")) {
@@ -66,7 +61,7 @@ public class SyntaxAnalizer {
                     //OK
                 } else if (nextToken.getLexema().equalsIgnoreCase(",")) {
                     //OK
-                } else if (nextToken.getLexema().equalsIgnoreCase(";")) {
+                } else if (nextToken.getType() == 10) {
                     //OK
                 } else {
                     this.setError(nextToken);
@@ -109,7 +104,7 @@ public class SyntaxAnalizer {
                         this.setError(nextToken);
                     }
                 } else if ("FROM".equals(state)) {
-                    if (nextToken.getLexema().equalsIgnoreCase(";")) {
+                    if (nextToken.getType() == 10) {
                         //OK
                     } else if (nextToken == null) {
                         //OK
@@ -121,7 +116,7 @@ public class SyntaxAnalizer {
                         this.setError(nextToken);
                     }
                 } else if ("ORDER".equals(state)) {
-                    if (nextToken.getLexema().equalsIgnoreCase(";")) {
+                    if (nextToken.getType() == 10) {
                         //OK
                     } else if (nextToken == null) {
                         //OK
@@ -135,7 +130,7 @@ public class SyntaxAnalizer {
                         this.setError(nextToken);
                     }
                 } else if ("DELETE".equals(state)) {
-                    if (nextToken.getLexema().equalsIgnoreCase(";")) {
+                    if (nextToken.getType() == 10) {
                         //OK
                     } else if (nextToken == null) {
                         //OK
@@ -176,8 +171,15 @@ public class SyntaxAnalizer {
                     } else {
                         this.setError(nextToken);
                     }
+                } else if ("WHERE".equals(state)) {
+
+                    if (nextToken.getType() == 8) {
+                        //OK
+                    } else {
+                        this.setError(nextToken);
+                    }
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase(",")) {//COMA
+            } else if (actualToken.getLexema().equalsIgnoreCase(",")) {//,
                 if (nextToken.getType() == 2) {
                     //OK
                 } else {
@@ -206,7 +208,7 @@ public class SyntaxAnalizer {
                         this.setError(nextToken);
                     }
 
-                    if (nextToken.getLexema().equalsIgnoreCase(";")) {
+                    if (nextToken.getType() == 10) {
                         //OK
                     } else if (nextToken == null) {
                         //OK
@@ -238,9 +240,19 @@ public class SyntaxAnalizer {
                     this.setError(nextToken);
                 }
             } else if (actualToken.getType() == 5 || actualToken.getType() == 3) {//NÚMERO O STRING
-                if (nextToken.getLexema().equalsIgnoreCase("WHERE")) {
+                if (state == "WHERE") {
+                    if (nextToken.getType() == 10) {
+                        //OK
+                    } else if (nextToken.getLexema().equalsIgnoreCase(",")) {
+                        //OK
+                    } else if (nextToken == null) {
+                        //OK
+                    } else {
+                        this.setError(nextToken);
+                    }
+                } else if (nextToken.getLexema().equalsIgnoreCase("WHERE")) {
                     //OK
-                } else if (nextToken.getLexema().equalsIgnoreCase(";")) {
+                } else if (nextToken.getType() == 10) {
                     //OK
                 } else if (nextToken.getLexema().equalsIgnoreCase(",")) {
                     //OK
@@ -249,7 +261,7 @@ public class SyntaxAnalizer {
                 } else {
                     this.setError(nextToken);
                 }
-            } else if (actualToken.getLexema().equalsIgnoreCase(";")) {//;
+            } else if (actualToken.getType() == 10) {//;
                 if (nextToken.getLexema().equalsIgnoreCase("INSERT")) {
                     //OK
                 } else if (nextToken.getLexema().equalsIgnoreCase("SELECT")) {
@@ -263,12 +275,25 @@ public class SyntaxAnalizer {
                 } else {
                     this.setError(nextToken);
                 }
+            } else if (actualToken.getLexema().equalsIgnoreCase("WHERE")) {//WHERE
+                state = "WHERE";
+                if (nextToken.getType() == 2) {
+                    //OK
+                } else {
+                    this.setError(nextToken);
+                }
+            } else if (nextToken.getType() == 8) {//OPERADOR RELACIONAL
+                if (nextToken.getType() == 5 || nextToken.getType() == 3) {
+                    //OK
+                } else {
+                    this.setError(nextToken);
+                }
             }
         }
     }
 
     public void setError(Token token) {
-        errorsList.add("Error en la línea " + token.getRow() + " en la columna " + token.getCol() + ".");
+        errorsList.add("Error de sintaxis en la línea " + token.getRow() + " en la columna " + token.getCol() + ".");
     }
 
     public ArrayList<String> getErrorList() {
