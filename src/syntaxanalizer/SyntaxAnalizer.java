@@ -23,7 +23,10 @@ public class SyntaxAnalizer {
                 nextToken = tokenList.get(i + 1);
             }
 
-            if (actualToken.getType() == -3 || actualToken.getType() == -2 || nextToken.getType() == -3 || nextToken.getType() == -2) {
+            if (actualToken.getType() == -3 || 
+                    actualToken.getType() == -2 || 
+                    actualToken.getType() == -3 || 
+                    actualToken.getType() == -2) {
                 //OK
             } else if (actualToken.getLexema().equalsIgnoreCase("SELECT")) {//SELECT
                 state = "SELECT";
