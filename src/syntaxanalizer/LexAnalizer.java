@@ -122,7 +122,7 @@ public class LexAnalizer {
                 }
 
                 switch (state) {
-                    case -2://comntario linea
+                    case -2://comentario linea
                         lexema += lines.get(i).charAt(j);
                         if (j == lines.get(i).length() - 1) {//si es  el último caracter de la linea
                             type = -2;
