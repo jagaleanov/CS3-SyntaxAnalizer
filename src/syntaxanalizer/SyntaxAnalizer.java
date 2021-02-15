@@ -26,8 +26,7 @@ public class SyntaxAnalizer {
 
             if (actualToken.getType() == -3
                     || actualToken.getType() == -2
-                    || actualToken.getType() == -3
-                    || actualToken.getType() == -2) {
+                    || actualToken.getType() == -3) {
                 //OK
             } else if (actualToken.getLexema().equalsIgnoreCase("SELECT")) {//SELECT
                 state = "SELECT";
