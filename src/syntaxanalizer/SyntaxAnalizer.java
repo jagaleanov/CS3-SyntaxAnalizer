@@ -244,6 +244,13 @@ public class SyntaxAnalizer {
                 if (nextToken == null) {
                     System.out.println("error27");
                     this.setError(actualToken);
+                } else if ("SELECT".equals(state)) {
+                    if (nextToken.getType() == 2) {
+                        //OK
+                    } else {
+                        System.out.println("error27a");
+                        this.setError(nextToken);
+                    }
                 } else if ("INSERT2".equals(state)) {
                     if (nextToken.getType() == 2) {
                         //OK
@@ -371,6 +378,8 @@ public class SyntaxAnalizer {
                     } else if (nextToken.getLexema().equalsIgnoreCase("AND")) {
                         //OK
                     } else if (nextToken.getLexema().equalsIgnoreCase("OR")) {
+                        //OK
+                    } else if (nextToken.getLexema().equalsIgnoreCase("ORDER")) {
                         //OK
                     } else if (nextToken.getType() == 8) {
                         //OK
