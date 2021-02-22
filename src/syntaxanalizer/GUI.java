@@ -39,6 +39,8 @@ public class GUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtConsole = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        sinConsoleTxt = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,7 +54,7 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(3, 1));
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -79,6 +81,12 @@ public class GUI extends javax.swing.JFrame {
         jPanel3.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanel3);
+
+        sinConsoleTxt.setColumns(20);
+        sinConsoleTxt.setRows(5);
+        jScrollPane1.setViewportView(sinConsoleTxt);
+
+        jPanel1.add(jScrollPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,17 +118,20 @@ public class GUI extends javax.swing.JFrame {
     private void btnAnalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizeActionPerformed
         tokenList = new ArrayList();
         new LexAnalizer(tokenList).analize(txtEditor.getText());
-        String consoleResponse = "";
+        String lexConsole = "";
+        String sinConsole = "";
         for (int i = 0; i < tokenList.size(); i++) {
-            consoleResponse += tokenList.get(i).toString();
+            lexConsole += tokenList.get(i).toString();
         }
         SyntaxAnalizer syntAn = new SyntaxAnalizer(tokenList);
         for (int i = 0; i < syntAn.getErrorList().size(); i++) {
-            consoleResponse += syntAn.getErrorList().get(i);
+            sinConsole += syntAn.getErrorList().get(i);
         }
         
         txtConsole.setText("");
-        txtConsole.setText(consoleResponse);
+        txtConsole.setText(lexConsole);
+        sinConsoleTxt.setText("");
+        sinConsoleTxt.setText(sinConsole);
         
         
     }//GEN-LAST:event_btnAnalizeActionPerformed
@@ -169,8 +180,10 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea sinConsoleTxt;
     private javax.swing.JTextArea txtConsole;
     private javax.swing.JTextArea txtEditor;
     // End of variables declaration//GEN-END:variables

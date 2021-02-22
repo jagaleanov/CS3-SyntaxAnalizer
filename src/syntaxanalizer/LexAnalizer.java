@@ -22,7 +22,7 @@ public class LexAnalizer {
 
     //OPERADORES
     private final String endSentenceRegEx = "[;]";//operador de cierre de sentencia
-    private final String mathRegEx = "[+-/%()*]";//operadores artiméticos
+    private final String mathRegEx = "([+-/%()*])";//operadores artiméticos
     private final String relRegEx = "([<][=][>])|([<>!][=])|([<][>])|[=<>]";//operadores relacionales 
     private final String chainRegEx = "[/][*]|[*][/]|[\"']";//apertura y cierre de cadenas
     private final String delimiterRegEx = "[.,]";//delimitadores
